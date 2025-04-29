@@ -182,30 +182,5 @@ partial class MainForm
         this.PerformLayout();
     }
 
-    private void SuspendLayout()
-    {
-        throw new NotImplementedException();
-    }
-
-    private void btnSave_Click(object sender, EventArgs e)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void btnClear_Click(object sender, EventArgs e)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void btnDelete_Click(object sender, EventArgs e)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void btnExit_Click(object sender, EventArgs e)
-    {
-        throw new NotImplementedException();
-    }
-
     #endregion
 }
