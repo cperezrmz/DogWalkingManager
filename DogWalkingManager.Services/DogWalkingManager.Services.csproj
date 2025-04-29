@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DogWalkingManager.Domain\DogWalkingManager.Domain.csproj" />
+    <ProjectReference Include="..\DogWalkingManager.Infrastructure\DogWalkingManager.Infrastructure.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
