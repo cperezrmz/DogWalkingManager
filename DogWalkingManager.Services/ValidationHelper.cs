@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace DogWalkingManager.Services
+﻿namespace DogWalkingManager.Services
 {
     /// <summary>
     /// Provides validation utilities for input data.
