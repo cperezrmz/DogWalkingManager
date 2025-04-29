@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DogWalkingManager", "DogWalkingManager\DogWalkingManager.csproj", "{E469A41C-8B49-4887-A2BA-2390B33E66DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DogWalkingManager.Domain", "DogWalkingManager.Domain\DogWalkingManager.Domain.csproj", "{EE6A2543-500B-46A5-8AE3-92E11482DB1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DogWalkingManager.Infrastructure", "DogWalkingManager.Infrastructure\DogWalkingManager.Infrastructure.csproj", "{762788CA-37F6-492C-9BBD-22D620C5275E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DogWalkingManager.Services", "DogWalkingManager.Services\DogWalkingManager.Services.csproj", "{2ACE1CA8-C366-4896-B128-5678BE6BA1FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DogWalkingManager.Tests", "DogWalkingManager.Tests\DogWalkingManager.Tests.csproj", "{748DD98B-3275-4F12-A245-4A18DDC9F428}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E469A41C-8B49-4887-A2BA-2390B33E66DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E469A41C-8B49-4887-A2BA-2390B33E66DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E469A41C-8B49-4887-A2BA-2390B33E66DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E469A41C-8B49-4887-A2BA-2390B33E66DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE6A2543-500B-46A5-8AE3-92E11482DB1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE6A2543-500B-46A5-8AE3-92E11482DB1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE6A2543-500B-46A5-8AE3-92E11482DB1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE6A2543-500B-46A5-8AE3-92E11482DB1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{762788CA-37F6-492C-9BBD-22D620C5275E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{762788CA-37F6-492C-9BBD-22D620C5275E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{762788CA-37F6-492C-9BBD-22D620C5275E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{762788CA-37F6-492C-9BBD-22D620C5275E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ACE1CA8-C366-4896-B128-5678BE6BA1FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ACE1CA8-C366-4896-B128-5678BE6BA1FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ACE1CA8-C366-4896-B128-5678BE6BA1FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ACE1CA8-C366-4896-B128-5678BE6BA1FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{748DD98B-3275-4F12-A245-4A18DDC9F428}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{748DD98B-3275-4F12-A245-4A18DDC9F428}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{748DD98B-3275-4F12-A245-4A18DDC9F428}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{748DD98B-3275-4F12-A245-4A18DDC9F428}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

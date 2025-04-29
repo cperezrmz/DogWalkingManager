@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\DogWalkingManager.Domain\DogWalkingManager.Domain.csproj" />
+    <ProjectReference Include="..\DogWalkingManager.Infrastructure\DogWalkingManager.Infrastructure.csproj" />
+    <ProjectReference Include="..\DogWalkingManager.Services\DogWalkingManager.Services.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+</Project>
