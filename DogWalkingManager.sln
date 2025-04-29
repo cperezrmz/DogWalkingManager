@@ -13,13 +13,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DogWalkingManager.Services"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DogWalkingManager.Tests", "DogWalkingManager.Tests\DogWalkingManager.Tests.csproj", "{748DD98B-3275-4F12-A245-4A18DDC9F428}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{D107F4C8-89CC-BEA8-D3D7-CA6B7733353D}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{E469A41C-8B49-4887-A2BA-2390B33E66DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -42,5 +44,11 @@ Global
 		{748DD98B-3275-4F12-A245-4A18DDC9F428}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{748DD98B-3275-4F12-A245-4A18DDC9F428}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{748DD98B-3275-4F12-A245-4A18DDC9F428}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9901C8F3-4D34-441A-831D-69DF26041C96}
 	EndGlobalSection
 EndGlobal
