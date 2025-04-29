@@ -20,6 +20,10 @@ partial class MainForm
     private System.Windows.Forms.Button btnDelete;
     private System.Windows.Forms.Button btnExit;
     private System.Windows.Forms.DataGridView dgvData;
+    private System.Windows.Forms.TextBox txtSearch;
+    private System.Windows.Forms.Button btnSearch;
+    private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
+    private System.Windows.Forms.ToolStripMenuItem deleteMenuItem;
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -56,6 +60,8 @@ partial class MainForm
         dgvData = new DataGridView();
         Age = new Label();
         label1 = new Label();
+        txtSearch = new TextBox();
+        btnSearch = new Button();
         ((System.ComponentModel.ISupportInitialize)nudAge).BeginInit();
         ((System.ComponentModel.ISupportInitialize)nudDuration).BeginInit();
         ((System.ComponentModel.ISupportInitialize)dgvData).BeginInit();
@@ -161,12 +167,31 @@ partial class MainForm
         dgvData.AllowUserToAddRows = false;
         dgvData.AllowUserToDeleteRows = false;
         dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        dgvData.Location = new Point(30, 200);
+        dgvData.Location = new Point(30, 229);
         dgvData.Name = "dgvData";
         dgvData.ReadOnly = true;
         dgvData.RowTemplate.Height = 25;
         dgvData.Size = new Size(600, 200);
         dgvData.TabIndex = 11;
+        dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+        dgvData.MultiSelect = false;
+        dgvData.ReadOnly = true;
+        dgvData.AllowUserToAddRows = false;
+        dgvData.AllowUserToDeleteRows = false;
+        dgvData.RowHeadersVisible = false;
+        // contextMenuStrip
+        this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+        this.deleteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+        this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.deleteMenuItem });
+
+        // deleteMenuItem
+        this.deleteMenuItem.Text = "Delete";
+        this.deleteMenuItem.Click += new System.EventHandler(this.DeleteMenuItem_Click);
+
+        // dgvData (después de inicializar dgvData)
+        this.dgvData.ContextMenuStrip = this.contextMenuStrip;
+        this.dgvData.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvData_MouseDown);
+
         // 
         // Age
         // 
@@ -186,11 +211,31 @@ partial class MainForm
         label1.TabIndex = 13;
         label1.Text = "Duration";
         // 
+        // txtSearch
+        // 
+        txtSearch.Location = new Point(30, 200);
+        txtSearch.Name = "txtSearch";
+        txtSearch.PlaceholderText = "Search by Client or Dog";
+        txtSearch.Size = new Size(180, 23);
+        txtSearch.TabIndex = 11;
+        // 
+        // btnSearch
+        // 
+        btnSearch.Location = new Point(230, 193);
+        btnSearch.Name = "btnSearch";
+        btnSearch.Size = new Size(80, 30);
+        btnSearch.TabIndex = 12;
+        btnSearch.Text = "Search";
+        btnSearch.UseVisualStyleBackColor = true;
+        btnSearch.Click += btnSearch_Click;
+        // 
         // MainForm
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(680, 430);
+        ClientSize = new Size(680, 457);
+        Controls.Add(txtSearch);
+        Controls.Add(btnSearch);
         Controls.Add(label1);
         Controls.Add(Age);
         Controls.Add(dgvData);
@@ -210,6 +255,7 @@ partial class MainForm
         Name = "MainForm";
         StartPosition = FormStartPosition.CenterScreen;
         Text = "Dog Walking Manager";
+        this.dgvData.SelectionChanged += new System.EventHandler(this.dgvData_SelectionChanged);
         ((System.ComponentModel.ISupportInitialize)nudAge).EndInit();
         ((System.ComponentModel.ISupportInitialize)nudDuration).EndInit();
         ((System.ComponentModel.ISupportInitialize)dgvData).EndInit();

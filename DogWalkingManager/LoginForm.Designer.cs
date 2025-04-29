@@ -80,6 +80,7 @@
             this.lblPassword.Size = new System.Drawing.Size(60, 15);
             this.lblPassword.TabIndex = 5;
             this.lblPassword.Text = "Password:";
+            this.AcceptButton = this.btnLogin;
 
             // LoginForm
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);

@@ -95,17 +95,33 @@ namespace DogWalkingManager
         }
 
         /// <summary>
-        /// Deletes the selected client and related data.
+        /// Deletes the selected client and related data after confirmation.
         /// </summary>
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (dgvData.SelectedRows.Count > 0)
+            if (dgvData.CurrentRow != null)
             {
-                var clientName = dgvData.SelectedRows[0].Cells[0].Value?.ToString();
-                _dogWalkingService.DeleteClientByName(clientName);
-                RefreshDataGrid();
+                var clientName = dgvData.CurrentRow.Cells[0].Value?.ToString();
+                if (!string.IsNullOrWhiteSpace(clientName))
+                {
+                    var result = MessageBox.Show(
+                        $"Are you sure you want to delete client '{clientName}' and all related data?",
+                        "Confirm Deletion",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning
+                    );
+
+                    if (result == DialogResult.Yes)
+                    {
+                        _dogWalkingService.DeleteClientByName(clientName);
+                        RefreshDataGrid();
+                        ClearFields();
+                    }
+                }
             }
         }
+
+
 
         /// <summary>
         /// Clears all input fields.
@@ -119,8 +135,8 @@ namespace DogWalkingManager
         /// Closes the application.
         /// </summary>
         private void btnExit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
+        {            
+            Application.Exit();            
         }
 
         /// <summary>
@@ -168,6 +184,111 @@ namespace DogWalkingManager
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             _dataStore.SaveData(_context.Clients, _context.Dogs, _context.Walks);
+        }
+
+        /// <summary>
+        /// Searches and displays clients or dogs matching the search text.
+        /// </summary>
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            string searchText = txtSearch.Text.Trim().ToLower();
+
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                RefreshDataGrid();
+                return;
+            }
+
+            dgvData.Rows.Clear();
+
+            foreach (var client in _clientRepository.GetAll())
+            {
+                var dog = _dogRepository.GetAll().FirstOrDefault(d => d.ClientId == client.Id);
+                if (dog != null)
+                {
+                    if (client.Name.ToLower().Contains(searchText) || dog.Name.ToLower().Contains(searchText))
+                    {
+                        var walk = _walkRepository.GetAll().FirstOrDefault(w => w.DogId == dog.Id);
+                        dgvData.Rows.Add(
+                            client.Name,
+                            client.PhoneNumber,
+                            dog.Name,
+                            dog.Breed,
+                            dog.Age,
+                            walk?.WalkDate.ToShortDateString(),
+                            walk?.DurationMinutes
+                        );
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Fills the input fields when a row is selected.
+        /// </summary>
+        private void dgvData_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvData.SelectedRows.Count > 0)
+            {
+                var selectedRow = dgvData.SelectedRows[0];
+
+                txtClientName.Text = selectedRow.Cells[0].Value?.ToString() ?? string.Empty;
+                txtPhoneNumber.Text = selectedRow.Cells[1].Value?.ToString() ?? string.Empty;
+                txtDogName.Text = selectedRow.Cells[2].Value?.ToString() ?? string.Empty;
+                txtBreed.Text = selectedRow.Cells[3].Value?.ToString() ?? string.Empty;
+
+                if (int.TryParse(selectedRow.Cells[4].Value?.ToString(), out int age))
+                {
+                    nudAge.Value = age;
+                }
+                else
+                {
+                    nudAge.Value = 0;
+                }
+
+                if (DateTime.TryParse(selectedRow.Cells[5].Value?.ToString(), out DateTime walkDate))
+                {
+                    dtpWalkDate.Value = walkDate;
+                }
+                else
+                {
+                    dtpWalkDate.Value = DateTime.Now;
+                }
+
+                if (int.TryParse(selectedRow.Cells[6].Value?.ToString(), out int duration))
+                {
+                    nudDuration.Value = duration;
+                }
+                else
+                {
+                    nudDuration.Value = 30;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles right-click selection of row under mouse.
+        /// </summary>
+        private void dgvData_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var hitTest = dgvData.HitTest(e.X, e.Y);
+                if (hitTest.RowIndex >= 0)
+                {
+                    dgvData.ClearSelection();
+                    dgvData.Rows[hitTest.RowIndex].Selected = true;
+                    dgvData.CurrentCell = dgvData.Rows[hitTest.RowIndex].Cells[0];
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles Delete option from right-click context menu.
+        /// </summary>
+        private void DeleteMenuItem_Click(object sender, EventArgs e)
+        {
+            btnDelete.PerformClick(); 
         }
     }
 }
