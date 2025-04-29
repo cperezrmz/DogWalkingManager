@@ -1,10 +1,11 @@
+using DogWalkingManager.Domain.Entities;
 using DogWalkingManager.Infrastructure.DataContext;
+using DogWalkingManager.Infrastructure.Repositories;
+using DogWalkingManager.Infrastructure.Persistence;
 using DogWalkingManager.Services;
 using System;
 using System.Linq;
 using System.Windows.Forms;
-using DogWalkingManager.Domain.Entities;
-using DogWalkingManager.Infrastructure.Repositories;
 
 namespace DogWalkingManager
 {
@@ -18,12 +19,19 @@ namespace DogWalkingManager
         private readonly ClientRepository _clientRepository;
         private readonly DogRepository _dogRepository;
         private readonly WalkRepository _walkRepository;
+        private readonly JsonDataStoreService _dataStore;
 
+        /// <summary>
+        /// Initializes the MainForm and sets up dependencies and UI.
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
 
             _context = new InMemoryContext();
+            _dataStore = new JsonDataStoreService();
+            _dataStore.LoadData(_context.Clients, _context.Dogs, _context.Walks);
+
             _dogWalkingService = new DogWalkingService(_context);
             _clientRepository = new ClientRepository(_context);
             _dogRepository = new DogRepository(_context);
@@ -39,8 +47,13 @@ namespace DogWalkingManager
             dgvData.Columns.Add("Duration", "Duration (min)");
 
             RefreshDataGrid();
+
+            this.FormClosing += MainForm_FormClosing;
         }
 
+        /// <summary>
+        /// Saves entered data after validating all fields.
+        /// </summary>
         private void btnSave_Click(object sender, EventArgs e)
         {
             string clientName = txtClientName.Text.Trim();
@@ -51,7 +64,6 @@ namespace DogWalkingManager
             DateTime walkDate = dtpWalkDate.Value;
             int duration = (int)nudDuration.Value;
 
-            // Required field validations
             if (string.IsNullOrWhiteSpace(clientName))
             {
                 MessageBox.Show("Client name is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -64,37 +76,27 @@ namespace DogWalkingManager
                 return;
             }
 
-            // Phone format
             if (!ValidationHelper.IsValidPhone(phone))
             {
-                MessageBox.Show("Phone number must be at least 8 digits and contain only numbers.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Phone number must be at least 8 digits and numeric.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Dog age check
             if (!ValidationHelper.IsValidAge(age))
             {
                 MessageBox.Show("Age must be between 1 and 30.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // All validations passed
-            _dogWalkingService.SaveClientDogAndWalk(
-                clientName,
-                phone,
-                dogName,
-                breed,
-                age,
-                walkDate,
-                duration
-            );
-
+            _dogWalkingService.SaveClientDogAndWalk(clientName, phone, dogName, breed, age, walkDate, duration);
             RefreshDataGrid();
             ClearFields();
             MessageBox.Show("Information saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-
+        /// <summary>
+        /// Deletes the selected client and related data.
+        /// </summary>
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (dgvData.SelectedRows.Count > 0)
@@ -105,16 +107,25 @@ namespace DogWalkingManager
             }
         }
 
+        /// <summary>
+        /// Clears all input fields.
+        /// </summary>
         private void btnClear_Click(object sender, EventArgs e)
         {
             ClearFields();
         }
 
+        /// <summary>
+        /// Closes the application.
+        /// </summary>
         private void btnExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
+        /// <summary>
+        /// Reloads the data grid with the latest data.
+        /// </summary>
         private void RefreshDataGrid()
         {
             dgvData.Rows.Clear();
@@ -137,6 +148,9 @@ namespace DogWalkingManager
             }
         }
 
+        /// <summary>
+        /// Clears all input fields on the form.
+        /// </summary>
         private void ClearFields()
         {
             txtClientName.Clear();
@@ -146,6 +160,14 @@ namespace DogWalkingManager
             nudAge.Value = 0;
             dtpWalkDate.Value = DateTime.Now;
             nudDuration.Value = 30;
+        }
+
+        /// <summary>
+        /// Handles form closing event to persist data.
+        /// </summary>
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _dataStore.SaveData(_context.Clients, _context.Dogs, _context.Walks);
         }
     }
 }
